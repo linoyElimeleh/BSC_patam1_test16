@@ -1,24 +1,27 @@
 package test;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Dictionary {
 
-    String text;
-    String[] words;
-    TreeMap<String, Set<String>> map = new TreeMap<String, Set<String>>();
+    TreeMap<Character, Set<String>> map = new TreeMap<>();
 
     public Dictionary(String text) {
-        this.text = text;
-        words = text.split(" ");
-
+        Scanner s = new Scanner(text);
+        while (s.hasNext()) {
+            String word = s.next();
+            char w = word.charAt(0);
+            if (!map.containsKey(w))
+                map.put(w, new HashSet<>());
+            map.get(w).add(word);
+        }
+        s.close();
     }
 
     public Set<String> getSet(char c) {
         if (map.containsKey(c)) {
-            Set<String> mapMatch = map.get(c);
-            return mapMatch;
-        } else return null;
+            return map.get(c);
+
+        } else return new HashSet<>();
     }
 }
